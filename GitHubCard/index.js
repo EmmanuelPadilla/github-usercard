@@ -1,21 +1,61 @@
+import axios from 'axios'
+
+
 /*
   STEP 1: using axios, send a GET request to the following URL
     (replacing the placeholder with your Github name):
     https://api.github.com/users/<your name>
 */
+const entryPoint = document.querySelector('.cards')
+console.log(entryPoint)
 
+axios.get("https://api.github.com/users/EmmanuelPadilla")
+  .then(stuff =>{
+    const gitCard = stuff.data
+    const myCard = ghcm(gitCard)
+    entryPoint.appendChild(myCard)
+  })
+  .catch(err =>{
+    console.log('error',err)
+  })
 /*
   STEP 2: Inspect and study the data coming back, this is YOUR
     github info! You will need to understand the structure of this
     data in order to use it to build your component function
-
     Skip to STEP 3.
-*/
-
-/*
   STEP 4: Pass the data received from Github into your function,
     and append the returned markup to the DOM as a child of .cards
-*/
+// */
+// axios.get(followersArray)
+//   .then(followersArray.forEach(follower =>{ 
+//   const followerCard = ghcm(follower.obj)
+//   entryPoint.appendChild(followerCard)
+// })
+
+// followersArray.forEach(URL =>{
+//   axios.get(followersArray)
+//   .then(stuff =>{
+//     const newCard =stuff.data
+//     const cardInfo = ghcm(URL)
+//     entryPoint.appendChild(cardInfo)
+//   })
+// })
+
+const followersArray = ["https://api.github.com/users/tetondan", "https://api.github.com/users/dustinmyers", "https://api.github.com/users/justsml", "https://api.github.com/users/luishrd", "https://api.github.com/users/bigknell"];
+
+
+followersArray.forEach(URL => {
+  axios.get(URL)
+  .then (stuff =>{
+    console.log(stuff)
+    const userCard = ghcm(stuff.data)
+    entryPoint.appendChild(userCard)
+  })
+  .catch(err =>{
+    console.log('error',err)
+})
+})
+
 
 /*
   STEP 5: Now that you have your own card getting added to the DOM, either
@@ -28,7 +68,9 @@
     user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+// const followersArray = ["tetondan", "dustinmyers", "justsml", "luishrd", "bigknell"]
+
+
 
 /*
   STEP 3: Create a function that accepts a single object as its only argument.
@@ -58,3 +100,47 @@ const followersArray = [];
     luishrd
     bigknell
 */
+
+
+
+function ghcm (obj){
+  const card = document.createElement('div')
+  const cardInfo = document.createElement('div')
+  const image = document.createElement('img')
+  const name = document.createElement('h3')
+  const gitHandle = document.createElement('p')
+  const location = document.createElement('p')
+  const profile = document.createElement('p')//link
+  const followers = document.createElement('p')
+  const following = document.createElement('p')
+  const bio = document.createElement('p')
+
+  card.classList.add('card')
+  image.classList.add('img')
+  name.classList.add('name')
+  gitHandle.classList.add('username')
+  cardInfo.classList.add('card-info')
+
+  image.src = obj.avatar_url
+  name.textContent = obj.name
+  gitHandle.textContent = obj.username
+  location.textContent = obj.location
+  profile.textContent = obj.html_url
+  followers.textContent = obj.followers_url
+  following.textContent = obj.following_url
+  bio.textContent = obj.bio
+
+card.appendChild(image)
+card.appendChild(cardInfo)
+cardInfo.append(name)
+cardInfo.append(gitHandle)
+cardInfo.append(location)
+cardInfo.append(profile)
+cardInfo.append(followers)
+cardInfo.append(following)
+cardInfo.append(bio)
+
+console.log('LOOK AT ME')
+return card
+}
+
