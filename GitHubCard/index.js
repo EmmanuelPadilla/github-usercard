@@ -13,7 +13,6 @@ axios.get("https://api.github.com/users/EmmanuelPadilla")
   .then(stuff =>{
     const gitCard = stuff.data
     const myCard = ghcm(gitCard)
-    console.log(myCard)
     entryPoint.appendChild(myCard)
   })
   .catch(err =>{
@@ -23,14 +22,40 @@ axios.get("https://api.github.com/users/EmmanuelPadilla")
   STEP 2: Inspect and study the data coming back, this is YOUR
     github info! You will need to understand the structure of this
     data in order to use it to build your component function
-
     Skip to STEP 3.
-*/
-
-/*
   STEP 4: Pass the data received from Github into your function,
     and append the returned markup to the DOM as a child of .cards
-*/
+// */
+// axios.get(followersArray)
+//   .then(followersArray.forEach(follower =>{ 
+//   const followerCard = ghcm(follower.obj)
+//   entryPoint.appendChild(followerCard)
+// })
+
+// followersArray.forEach(URL =>{
+//   axios.get(followersArray)
+//   .then(stuff =>{
+//     const newCard =stuff.data
+//     const cardInfo = ghcm(URL)
+//     entryPoint.appendChild(cardInfo)
+//   })
+// })
+
+const followersArray = ["https://api.github.com/users/tetondan", "https://api.github.com/users/dustinmyers", "https://api.github.com/users/justsml", "https://api.github.com/users/luishrd", "https://api.github.com/users/bigknell"];
+
+
+followersArray.forEach(URL => {
+  axios.get(URL)
+  .then (stuff =>{
+    console.log(stuff)
+    const userCard = ghcm(stuff.data)
+    entryPoint.appendChild(userCard)
+  })
+  .catch(err =>{
+    console.log('error',err)
+})
+})
+
 
 /*
   STEP 5: Now that you have your own card getting added to the DOM, either
@@ -43,7 +68,9 @@ axios.get("https://api.github.com/users/EmmanuelPadilla")
     user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+// const followersArray = ["tetondan", "dustinmyers", "justsml", "luishrd", "bigknell"]
+
+
 
 /*
   STEP 3: Create a function that accepts a single object as its only argument.
@@ -74,8 +101,6 @@ const followersArray = [];
     bigknell
 */
 
-
-// const card = document.createElement(".cards")
 
 
 function ghcm (obj){
