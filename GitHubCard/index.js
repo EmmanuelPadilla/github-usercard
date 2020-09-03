@@ -1,9 +1,24 @@
+import axios from 'axios'
+
+
 /*
   STEP 1: using axios, send a GET request to the following URL
     (replacing the placeholder with your Github name):
     https://api.github.com/users/<your name>
 */
+const entryPoint = document.querySelector('.cards')
+console.log(entryPoint)
 
+axios.get("https://api.github.com/users/EmmanuelPadilla")
+  .then(stuff =>{
+    const gitCard = stuff.data
+    const myCard = ghcm(gitCard)
+    console.log(myCard)
+    entryPoint.appendChild(myCard)
+  })
+  .catch(err =>{
+    console.log('error',err)
+  })
 /*
   STEP 2: Inspect and study the data coming back, this is YOUR
     github info! You will need to understand the structure of this
@@ -58,3 +73,49 @@ const followersArray = [];
     luishrd
     bigknell
 */
+
+
+// const card = document.createElement(".cards")
+
+
+function ghcm (obj){
+  const card = document.createElement('div')
+  const cardInfo = document.createElement('div')
+  const image = document.createElement('img')
+  const name = document.createElement('h3')
+  const gitHandle = document.createElement('p')
+  const location = document.createElement('p')
+  const profile = document.createElement('p')//link
+  const followers = document.createElement('p')
+  const following = document.createElement('p')
+  const bio = document.createElement('p')
+
+  card.classList.add('card')
+  image.classList.add('img')
+  name.classList.add('name')
+  gitHandle.classList.add('username')
+  cardInfo.classList.add('card-info')
+
+  image.src = obj.avatar_url
+  name.textContent = obj.name
+  gitHandle.textContent = obj.username
+  location.textContent = obj.location
+  profile.textContent = obj.html_url
+  followers.textContent = obj.followers_url
+  following.textContent = obj.following_url
+  bio.textContent = obj.bio
+
+card.appendChild(image)
+card.appendChild(cardInfo)
+cardInfo.append(name)
+cardInfo.append(gitHandle)
+cardInfo.append(location)
+cardInfo.append(profile)
+cardInfo.append(followers)
+cardInfo.append(following)
+cardInfo.append(bio)
+
+console.log('LOOK AT ME')
+return card
+}
+
